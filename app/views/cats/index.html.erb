@@ -1,0 +1,21 @@
+<h1> The Book Categories of the Library </h1>
+<% if @cats.empty? %>
+<p> There are no categories stored in the DataBase of the Library </p>
+<% else %>
+<table>
+  <tr>
+    <th> Description </th>
+    <th></th>
+    <th></th>
+  </tr>
+    <% @cats.each do |category| %>
+  <tr>
+    <td><%=category.description %> </td>
+    <td><%=link_to 'Edit category', edit_cat_path(category) %></td>
+    <td><%=link_to 'Delete category', cat_path(category), method: :delete, data: {confirm: 'Are you sure?'}%></td>
+  </tr>
+  <% end %>
+</table>
+<% end %>
+<p><%=link_to 'Add a new category', new_cat_path %> </p>
+<p> <%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

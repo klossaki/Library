@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  isbn: MyString
+  author_id: 1
+  cat_it: 1
+  copies: 1
+  rank: 1
+
+two:
+  title: MyString
+  isbn: MyString
+  author_id: 1
+  cat_it: 1
+  copies: 1
+  rank: 1

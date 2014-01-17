@@ -1,0 +1,11 @@
+<h1>Add a new category <h1>
+  <%=form_for :cat, url:cats_path do |f| %>
+  <p>
+    <%=f.label :description %><br>
+    <%=f.text_field :description %>
+  </p>
+  
+  <p>
+    <%=f.submit %>
+  </p>
+    <% end %>
