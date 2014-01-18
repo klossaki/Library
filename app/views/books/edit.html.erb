@@ -1,0 +1,33 @@
+<h1>Editing book... </h1>
+ <%=form_for :book, url: book_path(@book), method: :patch do |f| %>
+   <p>
+    <%=f.label :title %><br>
+    <%=f.text_field :title, size: 40 %>
+  </p>
+  
+<p>
+    <%=f.label :ISBN %><br>
+    <%=f.text_field :isbn, size: 10 %>
+  </p>
+<p>
+    <%=f.label :author %><br>
+  <%=f.select "author_id", Author.all.collect{|t|[t.name, t.id]} %>
+  </p>
+  
+<p>
+    <%=f.label :category %><br>
+  <%=f.select "cat_id", Cat.all.collect{|t|[t.description, t.id]} %>
+  </p>
+
+<p>
+    <%=f.label :copies %><br>
+  <%=f.text_field :copies %>
+  </p>
+
+<p>
+    <%=f.label :rank %><br>
+  <%=f.number_field :rank, :value => 0  %>
+  </p>
+  
+  <%=f.submit %>
+  <% end %>
