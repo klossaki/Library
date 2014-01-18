@@ -7,6 +7,7 @@ Lib::Application.routes.draw do
    root 'welcom#index'
   resources :cats
   resources :books
+  resources :authors
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -1,0 +1,11 @@
+<h1>Add a new author <h1>
+  <%=form_for :author, url:authors_path do |f| %>
+  <p>
+    <%=f.label :name %><br>
+    <%=f.text_field :name %>
+  </p>
+  
+  <p>
+    <%=f.submit %>
+  </p>
+    <% end %>
