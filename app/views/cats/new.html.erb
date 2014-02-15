@@ -1,11 +1,20 @@
 <h1>Add a new category <h1>
-  <%=form_for :cat, url:cats_path do |f| %>
-  <p>
+  
+<% if current_user.admin? %> 
+ 
+  <%=form_for @cat do |f| %>
+    <p>
     <%=f.label :description %><br>
     <%=f.text_field :description, size: 40 %>
-  </p>
+    </p>
   
-  <p>
-    <%=f.submit %>
-  </p>
-    <% end %>
+    <p>
+    <%=f.submit "Add Category"%>
+    </p>
+  <% end %>
+
+<% else %>
+  <p> You are not authorized to view this page </p>
+<% end %>
+  
+<p> <%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

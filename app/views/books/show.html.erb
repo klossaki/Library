@@ -1,9 +1,17 @@
 <h1> The book you edited is... </h1>
-<p>Title: <%=@book.title %> </p>
-<p>ISBN: <%=@book.isbn %> </p>
-<p>Author: <%=@book.author.name %> </p>
-<p>Category: <%=@book.cat.description %> </p>
-<p>Number of Copies: <%=@book.copies %> </p>
-<p>Rank: <%=@book.rank %> </p>
 
-<p><%=link_to 'Back to the book menu', books_path %> </p>
+<% if current_user.admin? %> 
+  <p>Title: <%=@book.title %> </p>
+  <p>ISBN: <%=@book.isbn %> </p>
+  <p>Author: <%=@book.author.name %> </p>
+  <p>Category: <%=@book.cat.description %> </p>
+  <p>Number of Copies: <%=@book.copies %> </p>
+  <p>Rank: <%=@book.rank %> </p>
+
+  <p><%=link_to 'Back to the book menu', books_path %> </p>
+
+<% else %>
+  <p> You are not authorized to view this page </p>
+<% end %>
+
+<p> <%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

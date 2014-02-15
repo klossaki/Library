@@ -1,0 +1,43 @@
+<h1>Manage the Library Users</h1>
+<% if user_signed_in? %>
+
+  <p><% if current_user.admin? %> 
+    <%= will_paginate @users %>  
+    <table>
+      <tr>
+        <th>User ID</th>
+        <th>User Name</th>
+        <th>email</th>
+        <th>Admin?</th>
+        <th>Edit user</th>
+        <th>View user's borrows</th>
+        <th>Delete user </th>
+      </tr>
+
+      <% @users.order(:name).each do |user| %>
+        <% if user.admin %>
+          <% is_admin = "YES" %>
+        <% else %>
+          <% is_admin = "NO" %>
+        <% end %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= is_admin %></td>
+        <td><%=link_to 'Edit user', edit_user_admins_path(:user_id => user.id) %> </td>
+        <td><%=link_to 'View user borrows', index_by_user_borrows_path(user)%></td>
+        <td><%=link_to 'Delete user', admin_path(user), method: :delete, data: {confirm: 'Are you sure?'}%></td>
+      </tr>
+      <% end %>
+    </table>
+    <%= will_paginate @users %>  
+   
+  <% else %>
+    <p> You are not authorized to view this page </p>
+  <% end %>
+<% else %>
+  <p> <%= link_to "Sign In", new_user_session_path, :method => :get %></p>
+  <p> <%= link_to "Sign up", new_user_registration_path, :method => :get %></p>
+<% end %>
+<p> <%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

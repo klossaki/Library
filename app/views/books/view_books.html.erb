@@ -1,0 +1,39 @@
+<h1> List of the books in the Library </h1>
+<% if @books.empty? %>
+  There are no books currently in the library database
+<% else %>
+  <%= will_paginate @books %>
+  <table>
+    <tr>
+      <th> Title </th> <th> ISBN </th> <th> Author </th> <th> Category </th> <th> copies </th> <th> Rank </th> <th></th><th></th><th></th><th></th>
+    </tr>
+    <% @books.order(:title).each do |book| %>
+    <tr>
+      <td><%=book.title %></td>
+      <td><%=book.isbn %></td>
+      <td><%=book.author.name %></td>
+      <td><%=book.cat.description %></td>
+      <td><%=book.copies %></td>
+      <td><%=book.rank %></td>
+      <td><% if book.copies!=0 %>
+            <% if @number_of_books_not_returned <= 3 %>
+              <%=link_to 'Borrow book', new_borrow_path(:user_id => current_user.id, :book_id => book.id) %>
+            <%else %>
+              You have reached the maximum number of borrows
+            <% end %>
+          <% else %>
+            There are no copies currenlty available
+          <% end %> </td>
+      <td><%=link_to 'Rank book', new_userbookrank_path(:user_id => current_user.id, :book_id => book.id) %></td>
+      <td><%=link_to 'View comments for the book', index_by_book_comments_path(:user_id => current_user.id, :book_id => book.id) %></td>
+    </tr>
+    <% end %>
+  </table>
+  <%= will_paginate @books %>
+<% end %>
+
+<p><%=link_to 'Search by title', search_by_title_books_path %> </p>
+<p><%=link_to 'Search by author', search_by_author_authors_path %> </p>
+<p><%=link_to 'Search by category', search_by_category_cats_path %> </p>
+
+<p><%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

@@ -1,21 +1,32 @@
 <h1> The Book Categories of the Library </h1>
+
 <% if @cats.empty? %>
-<p> There are no categories stored in the DataBase of the Library </p>
+  <p> There are no categories stored in the DataBase of the Library </p>
 <% else %>
-<table>
+  <%= will_paginate @cats %>
+  <table>
   <tr>
     <th> Description </th>
     <th></th>
     <th></th>
   </tr>
-    <% @cats.each do |category| %>
-  <tr>
-    <td><%=category.description %> </td>
-    <td><%=link_to 'Edit category', edit_cat_path(category) %></td>
-    <td><%=link_to 'Delete category', cat_path(category), method: :delete, data: {confirm: 'Are you sure?'}%></td>
-  </tr>
-  <% end %>
-</table>
+    <% @cats.order(:description).each do |category| %>
+      <tr>
+        <td><%=category.description %> </td>
+        <% if can? :update, category %>
+          <td><%=link_to 'Edit category', edit_cat_path(category) %></td>
+          <td><%=link_to 'Delete category', cat_path(category), method: :delete, data: {confirm: 'Are you sure?'}%></td>
+        <% else%>
+          <td></td><td></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  <%= will_paginate @cats %>
 <% end %>
-<p><%=link_to 'Add a new category', new_cat_path %> </p>
+
+<% if can? :create, @cats %>
+  <p><%=link_to 'Add a new category', new_cat_path %> </p>
+<% end %>
+
 <p> <%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

@@ -1,0 +1,11 @@
+<h2>Search books by Category </h2>
+
+<%= form_for @cat, url: show_search_by_category_cats_path(@cat), :method => :get do |f| %>
+  <%=f.label :cat %>
+  <%=f.select "id", Cat.all.collect{|t|[t.description, t.id]}, :prompt => "- Choose a Category -" %>
+  <%= f.submit 'Search book' %>
+<% end %>
+
+<p><%=link_to 'Back to the book menu', :controller => "books", :action => "view_books" %> </p>
+
+<p><%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

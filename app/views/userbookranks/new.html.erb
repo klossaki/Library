@@ -1,0 +1,22 @@
+<h1> Rank a book </h1>
+
+<p> Book title: <%=@book.title %> </p>
+<p> Book author: <%=@book.author.name %> </p>
+<p> Please enter a number between 0 (worst rank) and 10(best rank) </p>
+
+<%=form_for @userbookrank do |f| %>
+
+  <%=f.hidden_field :book_id, :value => @book.id%>
+  <%=f.hidden_field :user_id, :value => current_user.id%>
+
+  <p><%=f.label :rank %><br>
+    <%=f.number_field :rank %>
+  </p>
+  <p>
+    <%=f.submit "Rank book"%>
+  </p>
+<% end %>
+
+<p><%=link_to 'Back to the book menu', :controller => "books", :action => "view_books" %> </p>
+
+<p><%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

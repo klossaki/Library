@@ -1,0 +1,7 @@
+<h1> You have borrowed the following book </h1>
+<p><%=@borrowed_book.book.title %></p>
+<p>The book is due to be returned in <%=@borrowed_book.date_of_return.strftime("%d/%m/%Y") %>. </p>
+
+<p><%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>
+
+

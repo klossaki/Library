@@ -1,9 +1,17 @@
 <h1>Editing author... </h1>
- <%=form_for :author, url: author_path(@author), method: :patch do |f| %>
-  <p>
+
+<% if current_user.admin? %> 
+  <%=form_for @author, url: author_path(@author), method: :patch do |f| %>
+    <p>
     <%=f.label :name %>
     <%=f.text_field :name, size: 40 %>
-  </p>
+    </p>
   
   <%=f.submit %>
   <% end %>
+
+<% else %>
+  <p> You are not authorized to view this page </p>
+<% end %>
+
+<p> <%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

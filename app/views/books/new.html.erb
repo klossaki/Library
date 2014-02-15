@@ -1,36 +1,44 @@
 <h1> Add a new book </h1>
-<%=form_for :book, url:books_path do |f| %>
-  <p>
+
+<% if current_user.admin? %> 
+  <%=form_for @book do |f| %>
+
+    <p>
     <%=f.label :title %><br>
     <%=f.text_field :title, size: 40 %>
-  </p>
+    </p>
   
-<p>
+    <p>
     <%=f.label :ISBN %><br>
     <%=f.text_field :isbn, size: 10 %>
-  </p>
-<p>
+    </p>
+
+    <p>
     <%=f.label :author %><br>
-  <%=f.select "author_id", Author.all.collect{|t|[t.name, t.id]} %>
-  </p>
+    <%=f.select "author_id", Author.all.collect{|t|[t.name, t.id]}, :prompt => "- Choose an Author -" %>
+    </p>
   
-<p>
+    <p>
     <%=f.label :category %><br>
-  <%=f.select "cat_id", Cat.all.collect{|t|[t.description, t.id]} %>
-  </p>
+    <%=f.select "cat_id", Cat.all.collect{|t|[t.description, t.id]}, :prompt => "- Choose a Category -" %>
+    </p>
 
-<p>
+    <p>
     <%=f.label :copies %><br>
-  <%=f.text_field :copies %>
-  </p>
+    <%=f.text_field :copies %>
+    </p>
 
-<p>
+    <p>
     <%=f.label :rank %><br>
-  <%=f.number_field :rank, :value => 0  %>
-  </p>
+    <%=f.number_field :rank, :value => 0  %>
+    </p>
 
-
-  <p>
+    <p>
     <%=f.submit %>
-  </p>
-    <% end %>
+    </p>
+  <% end %>
+
+<% else %>
+  <p> You are not authorized to view this page </p>
+<% end %>
+<p> <%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

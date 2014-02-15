@@ -1,3 +1,10 @@
-<h1> the author that you edited is the following: </h1>
-<p><%=@author.name %></p>
-<p><%=link_to 'Back to the Authors page', authors_path %> </p> 
+<h1> The author that you edited is the following: </h1>
+
+<% if current_user.admin? %> 
+  <p><%=@author.name %></p>
+  <p><%=link_to 'Back to the Authors page', authors_path %> </p> 
+<% else %>
+  <p> You are not authorized to view this page </p>
+<% end %>
+
+<p> <%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

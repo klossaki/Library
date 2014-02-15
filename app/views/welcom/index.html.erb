@@ -1,6 +1,19 @@
 <h1>Welcome to the Library</h1>
-
-
-Users <br>
-Books
-
+<% if user_signed_in? %>
+  <p><%= link_to "View and borrow books", view_books_books_path %> </p>
+  <p><%= link_to "View authors", view_authors_authors_path %> </p>
+  <p><%= link_to "View categories", view_cats_cats_path %> </p>
+  <p><%= link_to "Edit profile", edit_user_registration_path %></p>
+  <p><%= link_to "View borrowed books", :controller => :borrows, :action => :index_by_user %> </p>
+  <hr>
+  <% if current_user.admin? %> 
+    <p><%= link_to "Edit books", :controller => :books, :action => :index %></p>
+    <p><%= link_to "Edit authors", :controller => :authors, :action => :index %></p>
+    <p> <%= link_to "Edit users", :controller => :admins, :action => :index %></p>
+    <p><%= link_to "Edit categories", :controller => :cats, :action => :index %></p>
+    <p><%=link_to "Edit borrows", :controller => :borrows, :action=> :index %> </p>
+  <% end %>
+<% else %>
+  <p> <%= link_to "Sign In", new_user_session_path, :method => :get %></p>
+  <p> <%= link_to "Sign up", new_user_registration_path, :method => :get %></p>
+<% end %>

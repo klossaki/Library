@@ -1,0 +1,9 @@
+<h1> The book you ranked is... </h1>
+
+<p>Title: <%=@userbookrank.book.title %> </p>
+<p>Author: <%=@userbookrank.book.author.name %> </p>
+<p>Your rank: <%=@userbookrank.rank %> </p>
+
+<p><%=link_to 'Back to the book menu', :controller => "books", :action => "view_books" %> </p>
+
+<p><%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

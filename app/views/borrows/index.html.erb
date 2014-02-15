@@ -1,0 +1,76 @@
+<h1> List of the borrowed books in the Library per date </h1>
+
+<% if current_user.admin? %> 
+
+  <% if ((@borrows_not_returned.empty?) && (@borrows_returned.empty?)) %>
+    There are no books borrowed currently in the library database
+  <% else %>
+    <h2> Books that are still pending </h2>
+    <%= will_paginate @borrows_not_returned, :param_name => 'borrows_not_returned_page' %>
+    <table>
+    <tr>
+      <th> User </th> <th> Title </th> <th> Date of borrow </th> <th> Date of return </th> 
+      <th>Must be returned?</th> <th> Notify user </th> <th>Book is returned</th><th></th>
+    </tr>
+    <% @borrows_not_returned.order(:date_of_borrow).each do |borrow| %>
+    <tr>
+      <% if (borrow.returned == false) && (borrow.date_of_return.past?) %>
+        <% must_return = "YES!!" %>
+      <% else %>
+        <% must_return = "NO" %>
+      <% end %>
+      <td><%=borrow.user.name %></td>
+      <td><%=borrow.book.title %></td>
+      <td><%=borrow.date_of_borrow.strftime("%d/%m/%Y") %></td>
+      <td><%=borrow.date_of_return.strftime("%d/%m/%Y") %></td>
+      <td><%=must_return %></td>
+      <td>
+        <% @user = User.find(borrow.user_id) %>
+        <%=link_to 'Notify user', sendemail_borrows_path(:user_id => borrow.user_id, :book_id => borrow.book_id) %>
+      </td>
+      <td>
+        <% if borrow.returned==true %>
+          YES
+        <% else %>
+          <%=link_to 'Book returned', return_book_borrows_path(:borrow_id => borrow.id) %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+    </table>
+  
+  <%= will_paginate @borrows_not_returned, :param_name => 'borrows_not_returned_page' %>
+  <h2> Books that have been returned </h2>
+  <%= will_paginate @borrows_returned, :param_name => 'borrows_returned_page' %>
+  
+  <table>
+  <tr>
+    <th> User </th> <th> Title </th> <th> Date of borrow </th> <th> Has been returned? </th><th></th>
+  </tr>
+  <% @borrows_returned.order(:date_of_borrow).each do |borrow| %>
+  <tr>
+  <%  if borrow.returned == true %>
+    <% been_returned = "Yes" %>
+  <% end %>
+
+    <td><%=borrow.user.name %></td>
+    <td><%=borrow.book.title %></td>
+    <td><%=borrow.date_of_borrow.strftime("%d/%m/%Y") %></td>
+    <td>
+    <% if borrow.returned==true %>
+      YES
+    <% else %>
+      <%=link_to 'Book returned', return_book_borrows_path(:borrow_id => borrow.id) %>
+    <% end %>
+    </td>
+  </tr>
+  <% end %>
+  </table>
+  <%= will_paginate @borrows_returned, :param_name => 'borrows_returned_page' %>
+  <% end %>
+
+<% else %>
+  <p> You are not authorized to view this page </p>
+<% end %>
+
+<p><%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

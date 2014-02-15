@@ -1,0 +1,52 @@
+<h1> List of the books that you have borrowed </h1>
+<% if ((@borrows_not_returned.empty?) && (@borrows_returned.empty?))%>
+  You have borrowed no books
+<% else %>
+
+  <h2> Books still peding </h2>
+  <%= will_paginate @borrows_not_returned, :param_name => 'borrows_not_returned_page'  %>
+  <table>
+  <tr>
+    <th>Book Title</th><th>Borrowed in:</th><th>Due to return:</th><th>Returned?</th><th>Must return?</th>
+  </tr> 
+  <% @borrows_not_returned.order(:date_of_borrow).each do |borrow| %>
+  <tr>
+    <% if borrow.returned == false %>
+      <% been_returned = "No" %>
+    <% end %>
+    <% if (borrow.returned == false) && (borrow.date_of_return.past?) %>
+      <% must_return = "PLEASE RETURN THE BOOK AS SOON AS POSSIBLE" %>
+    <% else %>
+      <% must_return = "NO" %>
+    <% end %>
+    
+    <td><%=borrow.book.title %></td><td><%= borrow.date_of_borrow.strftime("%d/%m/%Y") %></td><td><%=borrow.date_of_return.strftime("%d/%m/%Y") %></td><td><%=been_returned %></td><td><%=must_return %> </td>
+  </tr>  
+  <%end%>
+  </table>
+  <%= will_paginate @borrows_not_returned, :param_name => 'borrows_not_returned_page'  %>
+
+  <h2> Books that have been returned </h2>
+  <%= will_paginate @borrows_returned, :param_name => 'borrows_returned_page'  %>
+  <table>
+  <tr>
+    <th>Book Title</th><th>Borrowed in:</th><th>Due to return:</th><th>Returned?</th>
+  </tr> 
+    <% @borrows_returned.order(:date_of_borrow).each do |borrow|%>
+  <tr>
+    <%  if borrow.returned == true %>
+      <% been_returned = "Yes" %>
+    <% end %>
+    <% if (borrow.returned == false) && (borrow.date_of_return.past?) %>
+      <% must_return = "PLEASE RETURN THE BOOK AS SOON AS POSSIBLE" %>
+    <% else %>
+      <% must_return = "NO" %>
+    <% end %>
+    <td><%=borrow.book.title %></td><td><%= borrow.date_of_borrow.strftime("%d/%m/%Y") %></td><td><%=borrow.date_of_return.strftime("%d/%m/%Y") %></td><td><%=been_returned %></td>
+  </tr>
+  <% end %>
+  </table>
+<%= will_paginate @borrows_returned, :param_name => 'borrows_returned_page'  %>
+<% end %>
+
+<p><%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

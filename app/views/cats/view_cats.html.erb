@@ -1,0 +1,19 @@
+<h1> The Book Categories of the Library </h1>
+<% if @cats.empty? %>
+  <p> There are no categories stored in the DataBase of the Library </p>
+<% else %>
+  <%= will_paginate @cats %>
+  <table>
+  <tr>
+    <th> Description </th>
+  </tr>
+    <% @cats.order(:description).each do |category| %>
+      <tr>
+        <td><%=category.description %> </td>
+      </tr>
+    <% end %>
+  </table>
+  <%= will_paginate @cats %>
+<% end %>
+
+<p> <%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

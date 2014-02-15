@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Greetings from the Library, <%= @user.name %></h1>
+    <p>
+      The administrator of the Library would like to inform you 
+      that the time that you can keep the book <%=@book.title %> has expired and you have to return it back. 
+    </p>
+    <p>
+      To login to the site, just follow this link: <%= @url %>.
+    </p>
+    <p>Thanks for joining and have a great day!</p>
+  </body>
+</html>

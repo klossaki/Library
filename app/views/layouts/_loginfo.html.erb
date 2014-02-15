@@ -1,0 +1,4 @@
+<% if user_signed_in? %>
+<p align="right">  Welcome <%=current_user.name %> </p>
+  <p align="right"> <%= link_to "Sign Out", destroy_user_session_path, :method => :delete %> </p>
+<% end %>

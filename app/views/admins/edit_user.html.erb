@@ -1,0 +1,21 @@
+<h1> Editing user </h1>
+<% if user_signed_in? %>
+
+  <% if current_user.admin? %> 
+  
+    <p>Name: <%=@user.name %>  </p>
+    <p>email: <%=@user.email %> </p>
+    <%=form_for :user, url: edit_user_admins_path(:user_id => @user.id), method: :patch do |f| %>
+      <div><%= f.label :admin %><br />
+      <%= f.select :admin, [['YES', true], ['NO', false]] %></div>
+      <%=f.submit "Update"%>
+    <% end %>
+   
+  <% else %>
+    <p> You are not authorized to view this page </p>
+  <% end %>
+
+<% else %>
+  <p> <%= link_to "Sign In", new_user_session_path, :method => :get %></p>
+  <p> <%= link_to "Sign up", new_user_registration_path, :method => :get %></p>
+<% end %>

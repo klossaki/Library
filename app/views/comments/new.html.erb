@@ -1,0 +1,23 @@
+<h1> Add a comment </h1>
+<% @book = Book.find(params[:book_id]) %>
+<p> Book title: <%=@book.title %> </p>
+<p> Book author: <%=@book.author.name %> </p>
+<p> Please enter your comment: </p>
+
+<%=form_for @comment do |f| %>
+
+  <%=f.hidden_field :book_id, :value => @book.id %>
+  <%=f.hidden_field :user_id, :value => current_user.id %>
+  <%=f.hidden_field :date_of_comment, :value => Date.today %>
+
+  <p><%=f.label :comment %><br>
+    <%=f.text_area :comment %>
+  </p>
+  <p>
+    <%=f.submit "Submit comment" %>
+  </p>
+<% end %>
+
+<p><%=link_to 'Back to the book menu', :controller => "books", :action => "view_books" %> </p>
+
+<p><%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

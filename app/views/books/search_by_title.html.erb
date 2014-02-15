@@ -1,0 +1,11 @@
+<h2>Search books by title </h2>
+
+<%= form_for @book, url: show_search_by_title_books_path(:title), :method => :get do |f| %>
+  <%=f.label :title %>
+  <%=f.text_field :title, size: 50 %>
+  <%= f.submit 'Search book' %>
+<% end %>
+
+<p><%=link_to 'Back to the book menu', :controller => "books", :action => "view_books" %> </p>
+
+<p><%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

@@ -1,9 +1,18 @@
 <h1>Editing a category <h1>
-  <%=form_for :cat, url: cat_path(@cat), method: :patch do |f| %>
-  <p>
+  
+<% if current_user.admin? %> 
+ 
+  <%=form_for @cat, url: cat_path(@cat), method: :patch do |f| %>
+    <p>
     <%=f.label :description %>
     <%=f.text_field :description, size: 40 %>
-  </p>
+    </p>
   
-  <%=f.submit %>
-  <% end %>
+    <%=f.submit "Update Category"%>
+    <% end %>
+  
+<% else %>
+  <p> You are not authorized to view this page </p>
+<% end %>
+  
+<p> <%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

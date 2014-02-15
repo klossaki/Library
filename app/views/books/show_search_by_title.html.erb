@@ -1,0 +1,37 @@
+<% if @books.empty? %>
+  There are no books in the Library that fulfill the given criteria
+<% else %>
+  <%= will_paginate @books %>
+  <h1>The books that complete the given criteria are the following:</h1>
+  <table>
+    <tr>
+      <th> Book Title </th> <th> Author </th> <th> Category </th> <th> copies </th> <th> Rank </th> <th></th><th></th>
+    </tr>
+  <% @books.each do |book| %>
+    <tr>
+      <td><%=book.title %> </td>
+      <td><%=book.author.name %> </td>
+      <td><%=book.cat.description %></td>
+      <td><%=book.copies %>  </td>
+      <td><%=book.rank %> 
+      </td>
+      <td>
+        <% if book.copies!=0 %>
+            <% if @number_of_books_not_returned <= 3 %>
+              <%=link_to 'Borrow book', new_borrow_path(:user_id => current_user.id, :book_id => book.id) %>
+            <%else %>
+              You have reached the maximum number of borrows
+            <% end %>
+          <% else %>
+            There are no copies currenlty available
+          <% end %> 
+      </td>
+      <td><%=link_to 'Rank book', new_userbookrank_path(:user_id => current_user.id, :book_id => book.id) %></td>
+    </tr>
+  <% end %>
+  </table>
+<%= will_paginate @books %>
+<% end %>
+
+<p><%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>
+

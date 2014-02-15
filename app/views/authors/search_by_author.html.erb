@@ -1,0 +1,11 @@
+<h2>Search books by author </h2>
+
+<%= form_for @author, url: show_search_by_author_authors_path(@author), :method => :get do |f| %>
+  <%=f.label :author %>
+  <%=f.select "id", Author.all.collect{|t|[t.name, t.id]}, :prompt => "- Choose an Author -" %>
+  <%= f.submit 'Search book' %>
+<% end %>
+
+<p><%=link_to 'Back to the book menu', :controller => "books", :action => "view_books" %> </p>
+
+<p><%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

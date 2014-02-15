@@ -1,0 +1,18 @@
+<h1> Listing of the authors of the Library </h1>
+<% if @authors.empty? %>
+There are no authors currently in the Library!
+<% else %>
+<%= will_paginate @authors %>
+<table>
+  <tr>
+    <th> Name </th> 
+  </tr>
+  <% @authors.order(:name).each do |author| %>
+  <tr>
+    <td> <%=author.name %> </td>
+  </tr>
+  <% end %>
+</table>
+<%= will_paginate @authors %>
+<% end %>
+<p> <%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

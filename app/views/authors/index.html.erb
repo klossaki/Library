@@ -1,20 +1,28 @@
 <h1> Listing of the authors of the Library </h1>
 <% if @authors.empty? %>
-There are no authors currently in the Library!
+  There are no authors currently in the Library!
 <% else %>
-<table>
-  <tr>
-    <th> Name </th> <th></th><th></th>
-  </tr>
-  <% @authors.each do |author| %>
-  <tr>
-    <td> <%=author.name %> </td>
-    <td><%=link_to 'Edit author', edit_author_path(author) %> </td> 
-    <td><%=link_to 'Delete author', author_path(author), method: :delete, data: {confirm: 'Are you sure?'}%></td>
-  </tr>
-  <% end %>
-</table>
+  <%= will_paginate @authors %>
+  <table>
+    <tr>
+      <th> Name </th> <th></th><th></th>
+    </tr>
+    <% @authors.order(:name).each do |author| %>
+      <tr>
+        <td> <%=author.name %> </td>
+        <% if can? :update, author %>
+          <td><%=link_to 'Edit author', edit_author_path(author) %> </td> 
+          <td><%=link_to 'Delete author', author_path(author), method: :delete, data: {confirm: 'Are you sure?'}%></td>
+        <% else%>
+          <td></td><td></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  <%= will_paginate @authors %>
 <% end %>
 <p> 
+<% if can? :create, @authors %>
   <%=link_to 'Add a new author', new_author_path %> </p>
+<% end %>
 <p> <%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>

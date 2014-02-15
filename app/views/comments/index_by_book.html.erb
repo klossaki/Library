@@ -1,0 +1,19 @@
+<% if @comments.empty? %>
+  <p> There are no comments for <b><%=@book.title %></b> yet.</p>
+  <p><%=link_to 'Make one now?',  new_comment_path(:book_id => @book.id) %></p>
+<% else %>
+  <p>The comments for <b><%=@book.title %></b> are the following: </p>
+  <%= will_paginate @comments %>
+  <% @comments.each do |comment|%>
+    <hr>
+    <p><b>User:</b> <%=comment.user.name %> <b>Date of comment:</b><%=comment.date_of_comment %> </p>
+    <p><b>Comment:</b> <%=comment.comment %> </p>
+  <% end %>
+  <%= will_paginate @comments %>
+<% end %>
+
+<p><%=link_to 'Create a comment',  new_comment_path(:book_id => @book.id) %></p>
+
+<p><%=link_to 'Back to the book menu', :controller => "books", :action => "view_books" %> </p>
+
+<p><%=link_to 'Back to the main menu', :controller => :welcom, :action => :index %> </p>
